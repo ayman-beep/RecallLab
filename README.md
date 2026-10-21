@@ -260,6 +260,8 @@ Design decisions worth knowing:
 * `npm run visual` → writes screenshots of every page (dark, light and mobile) to the git-ignored
   `screenshots/` folder; the curated images used in this README live in `docs/screenshots/`.
 * `npm run lint` → 0 warnings, 0 errors (oxlint).
+* **Cold clone** → `git clone` of this repository into an empty directory, then `npm ci`, `npm run build`,
+  the engine and curriculum checks, and `npm run lint` all pass with no extra steps.
 
 ---
 
@@ -319,8 +321,8 @@ The full smoke suite passes against the built bundle, including deep links such 
 
 ## Publishing this repository to GitHub
 
-A local Git history is already initialised with a single commit on `main`. To publish it as a public
-repository named `RecallLab`:
+A local Git history is already initialised on `main` with the full project committed. To publish it as
+a public repository named `RecallLab`:
 
 **One command (uses `gh` when available, plain Git otherwise)**
 
@@ -342,8 +344,9 @@ git remote add origin https://github.com/<your-username>/RecallLab.git
 git push -u origin main
 ```
 
-Nothing secret is committed: `node_modules/`, `dist/`, generated screenshots, the demo seed file and
-editor/OS noise are all covered by `.gitignore`.
+Nothing secret is committed: `node_modules/`, `dist/`, the generated root `screenshots/` folder, the demo
+seed file, `.netlify/` and editor/OS noise are all covered by `.gitignore`. The curated README images in
+`docs/screenshots/` are committed on purpose.
 
 ## Known scope boundaries
 
