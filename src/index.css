@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --app-bg: 246 248 251;
+  --app-surface: 255 255 255;
+  --app-raised: 241 245 249;
+  --app-border: 222 229 238;
+  --app-text: 15 23 42;
+  --app-muted: 100 116 139;
+  color-scheme: light;
+}
+
+.dark {
+  --app-bg: 7 11 18;
+  --app-surface: 14 21 33;
+  --app-raised: 19 28 43;
+  --app-border: 34 45 63;
+  --app-text: 231 237 245;
+  --app-muted: 148 163 184;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-app-bg text-app-text antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+::selection {
+  background: rgba(16, 185, 129, 0.28);
+}
+
+/* Visible, consistent focus states for keyboard users */
+:focus-visible {
+  outline: 2px solid rgb(52 211 153);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Subtle scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--app-border)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--app-border));
+  border-radius: 999px;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-app-border bg-app-surface shadow-card;
+  }
+  .card-raised {
+    @apply rounded-2xl border border-app-border bg-app-raised;
+  }
+  .label {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-app-muted;
+  }
+  .input-base {
+    @apply w-full rounded-xl border border-app-border bg-app-raised px-4 py-3 text-[15px] text-app-text placeholder:text-app-muted/70 transition focus:border-brand-500 focus:bg-app-surface focus:outline-none;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-app-border bg-app-raised px-2.5 py-1 text-xs font-medium text-app-muted;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-500 text-ink-950 hover:bg-brand-400;
+  }
+  .btn-secondary {
+    @apply btn border border-app-border bg-app-raised text-app-text hover:border-brand-500/50 hover:bg-app-surface;
+  }
+  .btn-ghost {
+    @apply btn text-app-muted hover:bg-app-raised hover:text-app-text;
+  }
+  .btn-danger {
+    @apply btn bg-red-500/90 text-white hover:bg-red-500;
+  }
+  .link-quiet {
+    @apply text-app-muted underline-offset-4 transition hover:text-app-text hover:underline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

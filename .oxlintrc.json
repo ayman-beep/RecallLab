@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": { "correctness": "error" },
+  "rules": {
+    "react/only-export-components": "off"
+  },
+  "ignorePatterns": ["dist", "screenshots", "node_modules"]
+}

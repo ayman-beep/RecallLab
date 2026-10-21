@@ -1,0 +1,50 @@
+# Netlify configuration — RecallLab (Vite + React single-page app)
+#
+# The repository root is the Vite project, so no `base` directory is needed.
+# Build with `npm run build` and publish the generated `dist/` folder.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # npm 10's peer-dependency resolver can fail on the Vite 8 + React 19 tree
+  # ("Cannot read properties of null (reading 'edgesOut')"). The app has no
+  # peer-conflicting dependencies, so relaxing peer resolution is safe here and
+  # keeps deploys deterministic.
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# React Router uses real URLs (/curriculum/week/9, /review, /study?...), so every
+# unmatched path must return the SPA shell instead of a 404. This is a rewrite
+# (status 200), not a redirect, so the URL stays intact for the router.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Hashed build assets never change, so they can be cached indefinitely.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# The entry document must always be revalidated so new deploys are picked up.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# Used by `netlify dev` for local runs that mirror the deployed behaviour.
+[dev]
+  command = "npm run dev"
+  targetPort = 5173
+  port = 8888
+  autoLaunch = false
