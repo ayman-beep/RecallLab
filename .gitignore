@@ -24,8 +24,8 @@ dist-ssr
 *.sw?
 
 # Generated artefacts (recreate with `npm run visual` / `npm run seed`)
-screenshots/
-scripts/seed-state.json
+/screenshots/
+/scripts/seed-state.json
 
 # Local Netlify folder
 .netlify
